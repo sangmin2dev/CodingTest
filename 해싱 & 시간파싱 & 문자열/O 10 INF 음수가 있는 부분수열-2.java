@@ -1,3 +1,5 @@
+// 연속된 부분수열을 표현하는 방법
+
 import java.util.HashMap;
 
 class Main{
