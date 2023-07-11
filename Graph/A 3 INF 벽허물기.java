@@ -1,4 +1,7 @@
 // 2차원 배열 초기화
+// for(int i = 0; i < n; i++) Arrays.fill(cost[i], Integer.MAX_VALUE);
+
+// PriorityQueue 사용해 벽허무는 경우의수중 최저만 갱신해서 조사
 
 import java.util.*;
 class Solution {
@@ -13,7 +16,7 @@ class Solution {
                 ch[i][j] = Integer.MAX_VALUE;
             }
         }
-        Queue<int[]> q = new LinkedList<>();
+        PriorityQueue<int[]> q = new PriorityQueue<>((e1,e2) -> e1[2] - e2[2]);
 
         ch[0][0] = 0;
         q.add(new int[]{0,0,0});
@@ -28,20 +31,17 @@ class Solution {
                     int nc = now[1] + dc[j];
 
                     if(nr<0 || nr>=board.length || nc <0 || nc>=board[0].length) continue;
-                    else if(board[nr][nc] == 1 && ch[nr][nc] <= now[2]+1) continue;
-                    else if(board[nr][nc] == 0 && ch[nr][nc] <= now[2]) continue;
                     else if(nr == board.length-1 && nc == board[0].length-1){
                         answer = Math.min(answer, now[2]);
                     }
-                    else{
-                        if(board[nr][nc] == 1) {
-                            ch[nr][nc] = now[2] + 1;
-                            q.add(new int[]{nr, nc, now[2]+1});
-                        }
-                        else{
-                            ch[nr][nc] = now[2];
-                            q.add(new int[]{nr, nc, now[2]});
-                        }
+                    else if(board[nr][nc] == 1 && ch[nr][nc] > now[2]+1) {
+                        ch[nr][nc] = now[2] + 1;
+                        q.add(new int[]{nr, nc, now[2]+1});
+                    }
+                    else if(board[nr][nc] == 0 && ch[nr][nc] > now[2]) {
+
+                        ch[nr][nc] = now[2];
+                        q.add(new int[]{nr, nc, now[2]});
                     }
                 }
             }

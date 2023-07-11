@@ -1,3 +1,5 @@
+// 체크함수를 따로 만들지 않고, board를 벽(1)로 만들어서 못가게 할 수도 있다
+
 import java.util.*;
 class Solution {
     public int solution(int[][] board){
