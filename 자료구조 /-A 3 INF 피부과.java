@@ -1,3 +1,5 @@
+// 진료시작시간을 잘못고려한 잘못된 풀이
+
 import java.util.LinkedList;
 import java.util.Queue;
 
