@@ -4,38 +4,39 @@ import java.io.*;
 class Main{
 
     static int n;
-    static int[][] board;
-    static int max = 0;
+    static int[] t;
+    static int[] p;
 
-    public static void sol(){
-        int[] sum = new int[n+1];
+    public static int sol(){
+        int[] dp = new int[n+2];
 
-        for(int now=1; now<=n; now++){
-            int next = now + board[now][0] -1;
+        for(int i=1; i<n+1; i++){
 
-            if(next > n);
-            else if(board[now][1] + max > sum[next]) {
-                sum[next] = board[now][1] + max;
-            }
-            if(sum[now] > max) {
-                max = sum[now];
-            }
+            if(i!=1) dp[i] = Math.max(dp[i], dp[i-1]);
+            else dp[i] = 0;
+
+            if(i+t[i] > n+1) ;
+            else dp[i+t[i]] = Math.max(dp[i+t[i]], dp[i]+p[i]);
         }
+
+        dp[n+1] = Math.max(dp[n], dp[n+1]);
+        return dp[n+1];
     }
 
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         n = Integer.parseInt(br.readLine());
-        board = new int[n+1][2];
+        t = new int[n+1];
+        p = new int[n+1];
+
         for(int i=0; i<n; i++){
             String[] tmp = br.readLine().split(" ");
-            board[i+1][0] = Integer.parseInt(tmp[0]);
-            board[i+1][1] = Integer.parseInt(tmp[1]);
+            t[i+1] = Integer.parseInt(tmp[0]);
+            p[i+1] = Integer.parseInt(tmp[1]);
         }
 
-        sol();
-        System.out.print(max);
+        System.out.print(sol());
 
     }
 }
